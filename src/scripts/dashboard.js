@@ -237,7 +237,7 @@ angular.module('adf')
         adfModel: '=',
         adfWidgetFilter: '='
       },
-      controller: function($scope){
+      controller: function($scope,$interval){
         var model = {};
         var structure = {};
         var widgetFilter = null;
@@ -397,6 +397,37 @@ angular.module('adf')
         };
 
         $scope.addNewWidgetToModel = addNewWidgetToModel;
+
+        $scope.timeGranularities = ['Hours', 'Days', 'Weeks'];
+        $scope.selectedTimeGranularity = $scope.timeGranularities[0];
+        $scope.handleTimeGranularityChange = function(){
+            $rootScope.$broadcast("d:dashboard:timeGranularityChanged",$scope.selectedTimeGranularity);
+        };
+
+        $scope.zones = ['All','Zone-A', 'Zone-B', 'Zone-C'];
+        $scope.selectedZone = $scope.zones[0];
+        $scope.handleZoneChange = function(){
+          $rootScope.$broadcast("d:dashboard:zoneChanged",$scope.selectedZone);
+        };
+
+        $scope.clock = {};
+        var serverTime = '2016-05-24 02:00:00';
+        var serverOffset = new Date(serverTime).getTime() - Date.now();
+        var sessionStoreKey = 'drpm::pmq::config';
+        var timePattern = 'HH:mm:ss';
+        var datePattern = 'DD/MM/YYYY';
+        
+        function setDateAndTime(){
+          var d = new moment().add(serverOffset,'milliseconds');
+          $scope.clock.time = d.format(timePattern);
+          $scope.clock.date = d.format(datePattern);
+        }
+
+        var promise = $interval(setDateAndTime, 1000);
+        // cancel interval on scope destroy
+        $scope.$on('$destroy', function(){
+          $interval.cancel(promise);
+        });
       },
       link: function ($scope, $element, $attr) {
         // pass options to scope

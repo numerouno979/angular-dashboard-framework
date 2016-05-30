@@ -315,4 +315,9 @@ gulp.task('travis', ['jslint', 'test', 'coverall', 'build']);
 /** shorthand methods **/
 gulp.task('all', ['build', 'docs', 'sample']);
 
-gulp.task('default', ['jslint', 'test', 'build']);
+gulp.task('default', ['jslint', 'build']);
+
+/** move **/
+gulp.task('deploy', function(){
+  gulp.src("dist/**.*").pipe(gulp.dest('/home/vaibhav/work/datarpm/product/datarpm-chief/main/public/vendor/dashboard/angular-dashboard-framework/dist'))
+});

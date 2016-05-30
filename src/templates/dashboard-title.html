@@ -1,17 +1,36 @@
-<h1>
-  {{model.title}}
-  <span style="font-size: 16px" class="pull-right">
-    <a href="" ng-if="editMode" title="add new widget" ng-click="addWidgetDialog()">
-      <i class="glyphicon glyphicon-plus-sign"></i>
-    </a>
-    <a href="" ng-if="editMode" title="edit dashboard" ng-click="editDashboardDialog()">
-      <i class="glyphicon glyphicon-cog"></i>
-    </a>
-    <a href="" ng-if="options.editable" title="{{editMode ? 'save changes' : 'enable edit mode'}}" ng-click="toggleEditMode()">
-      <i class="glyphicon" x-ng-class="{'glyphicon-edit' : !editMode, 'glyphicon-save' : editMode}"></i>
-    </a>
-    <a href="" ng-if="editMode" title="undo changes" ng-click="cancelEditMode()">
-      <i class="glyphicon glyphicon-repeat adf-flip"></i>
-    </a>
-  </span>
-</h1>
+<table>
+  <tr>
+      <td width="25%">
+          <span style="font-height:5em; font-weight:bold">
+            {{model.title}}
+          </span>
+      </td>
+      <td width="50%">
+          <span>
+            Time Scale : <select style="display: inline; width:10%" ng-model="selectedTimeGranularity" ng-options="g as g for g in timeGranularities" ng-change="handleTimeGranularityChange()" /> 
+          </span>
+          <span>
+            Zone : <select style="display: inline; width:10%" ng-model="selectedZone" ng-options="z as z for z in zones" ng-change="handleZoneChange()" /> 
+          </span>
+          <span>
+            Plant Date n Time : {{clock.date}}  <b>{{clock.time}}</b> 
+          </span>
+      </td>
+      <td width="25%">
+          <span style="font-size: 16px" class="pull-right">
+          <a href="" ng-if="editMode" title="add new widget" ng-click="addWidgetDialog()">
+            <i class="glyphicon glyphicon-plus-sign"></i>
+          </a>
+          <a href="" ng-if="editMode" title="edit dashboard" ng-click="editDashboardDialog()">
+            <i class="glyphicon glyphicon-cog"></i>
+          </a>
+          <a href="" ng-if="options.editable" title="{{editMode ? 'save changes' : 'enable edit mode'}}" ng-click="toggleEditMode()">
+            <i class="glyphicon" x-ng-class="{'glyphicon-edit' : !editMode, 'glyphicon-save' : editMode}"></i>
+          </a>
+          <a href="" ng-if="editMode" title="undo changes" ng-click="cancelEditMode()">
+            <i class="glyphicon glyphicon-repeat adf-flip"></i>
+          </a>
+        </span>
+      </td>
+  </tr>
+</table>
